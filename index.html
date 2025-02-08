@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>anivvv</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background:linear-gradient(to right, #f5aee9, #eacc87 );
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        
+        }
+        @keyframes gradientBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        h1 {
+            color: #d63384;
+        }
+        .question {
+            font-size: 1.4em;
+            margin: 20px 0;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .options button {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 80%;
+        }
+        .options button:hover {
+            background-color: #e55a50;
+        }
+        .feedback {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .next {
+            margin-top: 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+        .next:hover {
+            background-color: #218838;
+        }
+        .end-message {
+            font-size: 1.4em;
+            color: #555;
+        }
+
+        /* Popup Styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            display: none;
+            text-align: center;
+        }
+        .popup button {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background-color: #e55a50;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            display: none;
+        }
+        .show-message-btn {
+            margin-top: 30px;
+            background-color: #f3b20c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: center;
+        }
+        .show-message-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>pencapaian 1 tahun yang sangat indah</h1>
+        <div id="game">
+            <p class="question" id="question"></p>
+            <div class="options" id="options"></div>
+            <p class="feedback" id="feedback"></p>
+            <button class="next" id="next" onclick="nextQuestion()">Pertanyaan Selanjutnya</button>
+          
+                
+         
+         
+        </div>
+
+        
+        <button class="show-message-btn" onclick="window.location.href='https://iyan0802.github.io/link2aniv/'" >setelah semua klik sayanggg</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <p>Terima kasih telah menjadi bagian yang indah dalam hidupku selama ini ❤️. Aku selalu bangga dan bahagia bersamamu!</p>
+        <button onclick="closeMessage()">Tutup</button>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "kapan tanggal jadian kita",
+                options: ["17 Juli 2017", "8 Februari 2024", "11 Desember 2014"],
+                answer: "8 Februari 2024",
+                message: "wahhh bener banget sayangg tepatnya pas hari sabtu sayanggg, hehehhe , makasih yaa sayang udah selalu inget tanggal jadian kita, aku senengg banget sayangggg😚😚😚"
+            },
+            {
+                question: "udah berapa bulan hubungan kita sayangg?",
+                options: ["12 bulan", "1 tahun", "11 bulan"],
+                answer: "12 bulan", 
+                message: "wkwkk pasti sayang klik yang 1 tahun salah yah, sebenarnya ga salah sayang, cuma ini komedi wkwkwkw, heheheh makasih yaaa sayangg buat selama ini, sayang udah kasih segalanya buat aku sayanggg, sayang juga udah tetep mau pertahanin hubunga kita, heheheh walaupun kemerin kita ada problem tapi kita bisa lewatinya sayangggg🫂🫂🫂🫂"
+            },
+            {
+                question: "Di mana tempat impian kita untuk menikmati hari tua nih sayanggg?",
+                options: ["Bali", "Paris", "Switzerland"],
+                answer: "Switzerland",
+                message: "hhehehe swiss adalah negara impian kita sayang, tapi aku cuma ingin tinggal di tempat dimana kita bisa hidup bahagia syangg, semoga rumah kita besok di masa depan bisa se indah bahakan lebih dari impian kita yaa sayanggggg😚😚🫂🫂🫂"
+            },
+            {
+                question: "kenangan apa yang paling ayang ingett nih sayang selama 1 tahun kita pacaran sayangg",
+                options: ["awal kita kenal", "awal kita pacaran", "jawaban lain"],
+                answer: "awal kita kenal", 
+                
+                message: "heheheh ini adalah momen yang paling ga akan pernah terlupakan sayang, buat jawaban lainya kirim wa yaa sayanggg, aku ga tua gimanan buat jawaban banyak hehehhehe, aku sayang banget ama saayangggg🤍🤍🤍🤍"            },
+                {
+                question: "dimana nih sayang awal kita kenal",
+                options: ["telegram/ bot", "fb"," tiktok"],
+                answer: "telegram/ bot", 
+                message: "heheheh sumpah kayaknya kalo keluarga kita tau awal kita kenal dimana dan kaaya gimana kayaknya kita bakal di ketawain deh sayang ekekekek, tapi kita harus bisa butiin yaa sayangg kalo kita bisa jaga hubungan ini, walaupun ita bertemu di tempat yang kurang baik tapi cinta kita harus bener bener murni yaa sayanggg"
+            }
+
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            const questionEl = document.getElementById("question");
+            const optionsEl = document.getElementById("options");
+            const feedbackEl = document.getElementById("feedback");
+            const nextBtn = document.getElementById("next");
+
+            feedbackEl.textContent = "";
+            nextBtn.style.display = "none";
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionEl.textContent = currentQuestion.question;
+            optionsEl.innerHTML = "";
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsEl.appendChild(button);
+            });
+        }
+
+        function checkAnswer(option) {
+            const feedbackEl = document.getElementById("feedback");
+            const nextBtn = document.getElementById("next");
+            const currentQuestion = questions[currentQuestionIndex];
+
+            if (option === currentQuestion.answer) {
+                feedbackEl.textContent = currentQuestion.message;
+                feedbackEl.style.color = "green";
+            } else {
+                feedbackEl.textContent = "Jawaban salah! Coba lagi dengan hati-hati ya, Sayang.";
+                feedbackEl.style.color = "red";
+            }
+
+            nextBtn.style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                const gameEl = document.getElementById("game");
+                gameEl.innerHTML = `
+                    <p class="end-message">Selamat, Sayang! Kamu telah menyelesaikan semua pertanyaan. Aku bangga padamu. ❤️</p>
+                `;
+            }
+        }
+
+        function showMessage() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeMessage() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
